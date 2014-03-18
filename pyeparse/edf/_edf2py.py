@@ -1,7 +1,11 @@
 '''Wrapper for edf.h
 
 Generated with:
+<<<<<<< HEAD
 ctypesgen.py --insert-file edf2py_extra.py --cpp=cl -EP -a -l edfapi -o edf2py.py edf.h
+=======
+/home/larsoner/.local/bin/ctypesgen.py -a -l edfapi -o ../pyeparse/edf/_edf2py.py /usr/include/edf.h
+>>>>>>> parent of 388c050... FIX: Revert ctypes
 
 Do not modify this file.
 '''
@@ -342,6 +346,10 @@ _libdirs = []
 # ----------------------------------------------------------------------------
 
 import os.path, re, sys, glob
+<<<<<<< HEAD
+=======
+import platform
+>>>>>>> parent of 388c050... FIX: Revert ctypes
 import ctypes
 import ctypes.util
 
@@ -384,7 +392,7 @@ class LibraryLoader(object):
         if os.path.isabs(libname):
             yield libname
         else:
-            # FIXME / todo return '.' and os.path.dirname(__file__)
+            # FIXME / TODO return '.' and os.path.dirname(__file__)
             for path in self.getplatformpaths(libname):
                 yield path
 
@@ -476,7 +484,25 @@ class PosixLibraryLoader(LibraryLoader):
         try: directories.extend([dir.strip() for dir in open('/etc/ld.so.conf')])
         except IOError: pass
 
+<<<<<<< HEAD
         directories.extend(['/lib', '/usr/lib', '/lib64', '/usr/lib64'])
+=======
+        unix_lib_dirs_list = ['/lib', '/usr/lib', '/lib64', '/usr/lib64']
+        if sys.platform.startswith('linux'):
+            # Try and support multiarch work in Ubuntu
+            # https://wiki.ubuntu.com/MultiarchSpec
+            bitage = platform.architecture()[0]
+            if bitage.startswith('32'):
+                # Assume Intel/AMD x86 compat
+                unix_lib_dirs_list += ['/lib/i386-linux-gnu', '/usr/lib/i386-linux-gnu']
+            elif bitage.startswith('64'):
+                # Assume Intel/AMD x86 compat
+                unix_lib_dirs_list += ['/lib/x86_64-linux-gnu', '/usr/lib/x86_64-linux-gnu']
+            else:
+                # guess...
+                unix_lib_dirs_list += glob.glob('/lib/*linux-gnu')
+        directories.extend(unix_lib_dirs_list)
+>>>>>>> parent of 388c050... FIX: Revert ctypes
 
         cache = {}
         lib_re = re.compile(r'lib(.*)\.s[ol]')
@@ -596,6 +622,7 @@ _libs["edfapi"] = load_library("edfapi")
 
 # No modules
 
+<<<<<<< HEAD
 byte = c_ubyte # <input>: 101
 
 INT16 = c_short # <input>: 102
@@ -609,8 +636,23 @@ UINT32 = c_uint # <input>: 105
 UINT64 = c_ulonglong # <input>: 107
 
 INT64 = c_longlong # <input>: 108
+=======
+byte = c_ubyte # /usr/include/edftypes.h: 19
 
-# <input>: 115
+INT16 = c_short # /usr/include/edftypes.h: 20
+
+INT32 = c_int # /usr/include/edftypes.h: 21
+
+UINT16 = c_ushort # /usr/include/edftypes.h: 22
+
+UINT32 = c_uint # /usr/include/edftypes.h: 23
+
+UINT64 = c_ulonglong # /usr/include/edftypes.h: 28
+
+INT64 = c_longlong # /usr/include/edftypes.h: 29
+>>>>>>> parent of 388c050... FIX: Revert ctypes
+
+# /usr/include/edftypes.h: 40
 class struct_anon_1(Structure):
     pass
 
@@ -623,9 +665,13 @@ struct_anon_1._fields_ = [
     ('usec', INT16),
 ]
 
+<<<<<<< HEAD
 MICRO = struct_anon_1 # <input>: 115
+=======
+MICRO = struct_anon_1 # /usr/include/edftypes.h: 40
+>>>>>>> parent of 388c050... FIX: Revert ctypes
 
-# <input>: 186
+# /usr/include/edf_data.h: 135
 class struct_anon_2(Structure):
     pass
 
@@ -638,9 +684,13 @@ struct_anon_2._fields_ = [
     ('c', c_char),
 ]
 
+<<<<<<< HEAD
 LSTRING = struct_anon_2 # <input>: 186
+=======
+LSTRING = struct_anon_2 # /usr/include/edf_data.h: 135
+>>>>>>> parent of 388c050... FIX: Revert ctypes
 
-# <input>: 242
+# /usr/include/edf_data.h: 184
 class struct_anon_3(Structure):
     pass
 
@@ -705,9 +755,13 @@ struct_anon_3._fields_ = [
     ('errors', UINT16),
 ]
 
+<<<<<<< HEAD
 FSAMPLE = struct_anon_3 # <input>: 242
+=======
+FSAMPLE = struct_anon_3 # /usr/include/edf_data.h: 184
+>>>>>>> parent of 388c050... FIX: Revert ctypes
 
-# <input>: 288
+# /usr/include/edf_data.h: 226
 class struct_anon_4(Structure):
     pass
 
@@ -786,9 +840,13 @@ struct_anon_4._fields_ = [
     ('message', POINTER(LSTRING)),
 ]
 
+<<<<<<< HEAD
 FEVENT = struct_anon_4 # <input>: 288
+=======
+FEVENT = struct_anon_4 # /usr/include/edf_data.h: 226
+>>>>>>> parent of 388c050... FIX: Revert ctypes
 
-# <input>: 297
+# /usr/include/edf_data.h: 244
 class struct_anon_5(Structure):
     pass
 
@@ -805,9 +863,13 @@ struct_anon_5._fields_ = [
     ('text', byte * 260),
 ]
 
+<<<<<<< HEAD
 IMESSAGE = struct_anon_5 # <input>: 297
+=======
+IMESSAGE = struct_anon_5 # /usr/include/edf_data.h: 244
+>>>>>>> parent of 388c050... FIX: Revert ctypes
 
-# <input>: 306
+# /usr/include/edf_data.h: 259
 class struct_anon_6(Structure):
     pass
 
@@ -822,9 +884,13 @@ struct_anon_6._fields_ = [
     ('data', UINT16),
 ]
 
+<<<<<<< HEAD
 IOEVENT = struct_anon_6 # <input>: 306
+=======
+IOEVENT = struct_anon_6 # /usr/include/edf_data.h: 259
+>>>>>>> parent of 388c050... FIX: Revert ctypes
 
-# <input>: 330
+# /usr/include/edf_data.h: 283
 class struct_anon_7(Structure):
     pass
 
@@ -855,9 +921,13 @@ struct_anon_7._fields_ = [
     ('eye', byte),
 ]
 
+<<<<<<< HEAD
 RECORDINGS = struct_anon_7 # <input>: 330
+=======
+RECORDINGS = struct_anon_7 # /usr/include/edf_data.h: 283
+>>>>>>> parent of 388c050... FIX: Revert ctypes
 
-# <input>: 341
+# /usr/include/edf_data.h: 301
 class union_anon_8(Union):
     pass
 
@@ -876,6 +946,7 @@ union_anon_8._fields_ = [
     ('rec', RECORDINGS),
 ]
 
+<<<<<<< HEAD
 ALLF_DATA = union_anon_8 # <input>: 341
 
 enum_anon_9 = c_int # <input>: 534
@@ -887,8 +958,21 @@ HREF = (GAZE + 1) # <input>: 534
 RAW = (HREF + 1) # <input>: 534
 
 position_type = enum_anon_9 # <input>: 534
+=======
+ALLF_DATA = union_anon_8 # /usr/include/edf_data.h: 301
 
-# <input>: 565
+enum_anon_9 = c_int # /usr/include/edf.h: 79
+
+GAZE = 0 # /usr/include/edf.h: 79
+
+HREF = (GAZE + 1) # /usr/include/edf.h: 79
+
+RAW = (HREF + 1) # /usr/include/edf.h: 79
+
+position_type = enum_anon_9 # /usr/include/edf.h: 79
+>>>>>>> parent of 388c050... FIX: Revert ctypes
+
+# /usr/include/edf.h: 92
 class struct_anon_10(Structure):
     pass
 
@@ -905,15 +989,25 @@ struct_anon_10._fields_ = [
     ('endtime', c_uint),
 ]
 
+<<<<<<< HEAD
 TRIAL = struct_anon_10 # <input>: 565
+=======
+TRIAL = struct_anon_10 # /usr/include/edf.h: 92
+>>>>>>> parent of 388c050... FIX: Revert ctypes
 
-# <input>: 571
+# /usr/include/edf.h: 94
 class struct__EDFFILE(Structure):
     pass
 
+<<<<<<< HEAD
 EDFFILE = struct__EDFFILE # <input>: 571
 
 # <input>: 585
+=======
+EDFFILE = struct__EDFFILE # /usr/include/edf.h: 94
+
+# /usr/include/edf.h: 98
+>>>>>>> parent of 388c050... FIX: Revert ctypes
 class struct_anon_11(Structure):
     pass
 
@@ -924,75 +1018,79 @@ struct_anon_11._fields_ = [
     ('id', c_uint),
 ]
 
+<<<<<<< HEAD
 BOOKMARK = struct_anon_11 # <input>: 585
+=======
+BOOKMARK = struct_anon_11 # /usr/include/edf.h: 98
+>>>>>>> parent of 388c050... FIX: Revert ctypes
 
-# <input>: 628
+# /usr/include/edf.h: 118
 if hasattr(_libs['edfapi'], 'edf_open_file'):
     edf_open_file = _libs['edfapi'].edf_open_file
     edf_open_file.argtypes = [String, c_int, c_int, c_int, POINTER(c_int)]
     edf_open_file.restype = POINTER(EDFFILE)
 
-# <input>: 649
+# /usr/include/edf.h: 131
 if hasattr(_libs['edfapi'], 'edf_close_file'):
     edf_close_file = _libs['edfapi'].edf_close_file
     edf_close_file.argtypes = [POINTER(EDFFILE)]
     edf_close_file.restype = c_int
 
-# <input>: 718
+# /usr/include/edf.h: 173
 if hasattr(_libs['edfapi'], 'edf_get_next_data'):
     edf_get_next_data = _libs['edfapi'].edf_get_next_data
     edf_get_next_data.argtypes = [POINTER(EDFFILE)]
     edf_get_next_data.restype = c_int
 
-# <input>: 738
+# /usr/include/edf.h: 183
 if hasattr(_libs['edfapi'], 'edf_get_float_data'):
     edf_get_float_data = _libs['edfapi'].edf_get_float_data
     edf_get_float_data.argtypes = [POINTER(EDFFILE)]
     edf_get_float_data.restype = POINTER(ALLF_DATA)
 
-# <input>: 748
+# /usr/include/edf.h: 193
 if hasattr(_libs['edfapi'], 'edf_get_sample_close_to_time'):
     edf_get_sample_close_to_time = _libs['edfapi'].edf_get_sample_close_to_time
     edf_get_sample_close_to_time.argtypes = [POINTER(EDFFILE), c_uint]
     edf_get_sample_close_to_time.restype = POINTER(ALLF_DATA)
 
-# <input>: 760
+# /usr/include/edf.h: 201
 if hasattr(_libs['edfapi'], 'edf_get_element_count'):
     edf_get_element_count = _libs['edfapi'].edf_get_element_count
     edf_get_element_count.argtypes = [POINTER(EDFFILE)]
     edf_get_element_count.restype = c_uint
 
-# <input>: 780
+# /usr/include/edf.h: 212
 if hasattr(_libs['edfapi'], 'edf_get_preamble_text'):
     edf_get_preamble_text = _libs['edfapi'].edf_get_preamble_text
     edf_get_preamble_text.argtypes = [POINTER(EDFFILE), String, c_int]
     edf_get_preamble_text.restype = c_int
 
-# <input>: 795
+# /usr/include/edf.h: 222
 if hasattr(_libs['edfapi'], 'edf_get_preamble_text_length'):
     edf_get_preamble_text_length = _libs['edfapi'].edf_get_preamble_text_length
     edf_get_preamble_text_length.argtypes = [POINTER(EDFFILE)]
     edf_get_preamble_text_length.restype = c_int
 
-# <input>: 808
+# /usr/include/edf.h: 235
 if hasattr(_libs['edfapi'], 'edf_get_revision'):
     edf_get_revision = _libs['edfapi'].edf_get_revision
     edf_get_revision.argtypes = [POINTER(EDFFILE)]
     edf_get_revision.restype = c_int
 
-# <input>: 818
+# /usr/include/edf.h: 245
 if hasattr(_libs['edfapi'], 'edf_get_eyelink_revision'):
     edf_get_eyelink_revision = _libs['edfapi'].edf_get_eyelink_revision
     edf_get_eyelink_revision.argtypes = [POINTER(EDFFILE)]
     edf_get_eyelink_revision.restype = c_int
 
-# <input>: 868
+# /usr/include/edf.h: 262
 if hasattr(_libs['edfapi'], 'edf_set_trial_identifier'):
     edf_set_trial_identifier = _libs['edfapi'].edf_set_trial_identifier
     edf_set_trial_identifier.argtypes = [POINTER(EDFFILE), String, String]
     edf_set_trial_identifier.restype = c_int
 
-# <input>: 883
+# /usr/include/edf.h: 273
 if hasattr(_libs['edfapi'], 'edf_get_start_trial_identifier'):
     edf_get_start_trial_identifier = _libs['edfapi'].edf_get_start_trial_identifier
     edf_get_start_trial_identifier.argtypes = [POINTER(EDFFILE)]
@@ -1002,7 +1100,7 @@ if hasattr(_libs['edfapi'], 'edf_get_start_trial_identifier'):
         edf_get_start_trial_identifier.restype = String
         edf_get_start_trial_identifier.errcheck = ReturnString
 
-# <input>: 895
+# /usr/include/edf.h: 281
 if hasattr(_libs['edfapi'], 'edf_get_end_trial_identifier'):
     edf_get_end_trial_identifier = _libs['edfapi'].edf_get_end_trial_identifier
     edf_get_end_trial_identifier.argtypes = [POINTER(EDFFILE)]
@@ -1012,79 +1110,79 @@ if hasattr(_libs['edfapi'], 'edf_get_end_trial_identifier'):
         edf_get_end_trial_identifier.restype = String
         edf_get_end_trial_identifier.errcheck = ReturnString
 
-# <input>: 907
+# /usr/include/edf.h: 289
 if hasattr(_libs['edfapi'], 'edf_get_trial_count'):
     edf_get_trial_count = _libs['edfapi'].edf_get_trial_count
     edf_get_trial_count.argtypes = [POINTER(EDFFILE)]
     edf_get_trial_count.restype = c_int
 
-# <input>: 922
+# /usr/include/edf.h: 298
 if hasattr(_libs['edfapi'], 'edf_jump_to_trial'):
     edf_jump_to_trial = _libs['edfapi'].edf_jump_to_trial
     edf_jump_to_trial.argtypes = [POINTER(EDFFILE), c_int]
     edf_jump_to_trial.restype = c_int
 
-# <input>: 943
+# /usr/include/edf.h: 309
 if hasattr(_libs['edfapi'], 'edf_get_trial_header'):
     edf_get_trial_header = _libs['edfapi'].edf_get_trial_header
     edf_get_trial_header.argtypes = [POINTER(EDFFILE), POINTER(TRIAL)]
     edf_get_trial_header.restype = c_int
 
-# <input>: 958
+# /usr/include/edf.h: 320
 if hasattr(_libs['edfapi'], 'edf_goto_previous_trial'):
     edf_goto_previous_trial = _libs['edfapi'].edf_goto_previous_trial
     edf_goto_previous_trial.argtypes = [POINTER(EDFFILE)]
     edf_goto_previous_trial.restype = c_int
 
-# <input>: 971
+# /usr/include/edf.h: 329
 if hasattr(_libs['edfapi'], 'edf_goto_next_trial'):
     edf_goto_next_trial = _libs['edfapi'].edf_goto_next_trial
     edf_goto_next_trial.argtypes = [POINTER(EDFFILE)]
     edf_goto_next_trial.restype = c_int
 
-# <input>: 984
+# /usr/include/edf.h: 338
 if hasattr(_libs['edfapi'], 'edf_goto_trial_with_start_time'):
     edf_goto_trial_with_start_time = _libs['edfapi'].edf_goto_trial_with_start_time
     edf_goto_trial_with_start_time.argtypes = [POINTER(EDFFILE), c_uint]
     edf_goto_trial_with_start_time.restype = c_int
 
-# <input>: 997
+# /usr/include/edf.h: 347
 if hasattr(_libs['edfapi'], 'edf_goto_trial_with_end_time'):
     edf_goto_trial_with_end_time = _libs['edfapi'].edf_goto_trial_with_end_time
     edf_goto_trial_with_end_time.argtypes = [POINTER(EDFFILE), c_uint]
     edf_goto_trial_with_end_time.restype = c_int
 
-# <input>: 1034
+# /usr/include/edf.h: 372
 if hasattr(_libs['edfapi'], 'edf_set_bookmark'):
     edf_set_bookmark = _libs['edfapi'].edf_set_bookmark
     edf_set_bookmark.argtypes = [POINTER(EDFFILE), POINTER(BOOKMARK)]
     edf_set_bookmark.restype = c_int
 
-# <input>: 1049
+# /usr/include/edf.h: 380
 if hasattr(_libs['edfapi'], 'edf_free_bookmark'):
     edf_free_bookmark = _libs['edfapi'].edf_free_bookmark
     edf_free_bookmark.argtypes = [POINTER(EDFFILE), POINTER(BOOKMARK)]
     edf_free_bookmark.restype = c_int
 
-# <input>: 1065
+# /usr/include/edf.h: 389
 if hasattr(_libs['edfapi'], 'edf_goto_bookmark'):
     edf_goto_bookmark = _libs['edfapi'].edf_goto_bookmark
     edf_goto_bookmark.argtypes = [POINTER(EDFFILE), POINTER(BOOKMARK)]
     edf_goto_bookmark.restype = c_int
 
-# <input>: 1074
+# /usr/include/edf.h: 398
 if hasattr(_libs['edfapi'], 'edf_goto_next_bookmark'):
-    goto_next_bookmark = _libs['edfapi'].edf_goto_next_bookmark
-    goto_next_bookmark.argtypes = [POINTER(EDFFILE)]
-    goto_next_bookmark.restype = c_int
+    edf_goto_next_bookmark = _libs['edfapi'].edf_goto_next_bookmark
+    edf_goto_next_bookmark.argtypes = [POINTER(EDFFILE)]
+    edf_goto_next_bookmark.restype = c_int
 
-# <input>: 1082
+# /usr/include/edf.h: 406
 if hasattr(_libs['edfapi'], 'edf_goto_previous_bookmark'):
     edf_goto_previous_bookmark = _libs['edfapi'].edf_goto_previous_bookmark
     edf_goto_previous_bookmark.argtypes = [POINTER(EDFFILE)]
     edf_goto_previous_bookmark.restype = c_int
 
-# <input>: 1097
+# /usr/include/edf.h: 416
 if hasattr(_libs['edfapi'], 'edf_get_version'):
     edf_get_version = _libs['edfapi'].edf_get_version
     edf_get_version.argtypes = []
@@ -1094,93 +1192,83 @@ if hasattr(_libs['edfapi'], 'edf_get_version'):
         edf_get_version.restype = String
         edf_get_version.errcheck = ReturnString
 
-# <input>: 1108
+# /usr/include/edf.h: 427
 if hasattr(_libs['edfapi'], 'edf_get_event'):
     edf_get_event = _libs['edfapi'].edf_get_event
     edf_get_event.argtypes = [POINTER(ALLF_DATA)]
     edf_get_event.restype = POINTER(FEVENT)
 
-# <input>: 1116
+# /usr/include/edf.h: 435
 if hasattr(_libs['edfapi'], 'edf_get_sample'):
     edf_get_sample = _libs['edfapi'].edf_get_sample
     edf_get_sample.argtypes = [POINTER(ALLF_DATA)]
     edf_get_sample.restype = POINTER(FSAMPLE)
 
-# <input>: 1124
+# /usr/include/edf.h: 443
 if hasattr(_libs['edfapi'], 'edf_get_recording'):
     edf_get_recording = _libs['edfapi'].edf_get_recording
     edf_get_recording.argtypes = [POINTER(ALLF_DATA)]
     edf_get_recording.restype = POINTER(RECORDINGS)
 
-# <input>: 1142
+# /usr/include/edf.h: 450
 if hasattr(_libs['edfapi'], 'edf_get_uncorrected_raw_pupil'):
 <<<<<<< HEAD:pyeparse/edf/_edf2py.py
     edf_get_uncorrected_raw_pupil = _libs['edfapi'].edf_get_uncorrected_raw_pupil
-    edf_get_uncorrected_raw_pupil.argtypes = [POINTER(EDFFILE), POINTER(FSAMPLE),
-                                              c_int, POINTER(c_float)]
+    edf_get_uncorrected_raw_pupil.argtypes = [POINTER(EDFFILE), POINTER(FSAMPLE), c_int, POINTER(c_float)]
     edf_get_uncorrected_raw_pupil.restype = None
 
-# <input>: 1143
+# /usr/include/edf.h: 451
 if hasattr(_libs['edfapi'], 'edf_get_uncorrected_raw_cr'):
     edf_get_uncorrected_raw_cr = _libs['edfapi'].edf_get_uncorrected_raw_cr
-    edf_get_uncorrected_raw_cr.argtypes = [POINTER(EDFFILE), POINTER(FSAMPLE),
-                                           c_int, POINTER(c_float)]
+    edf_get_uncorrected_raw_cr.argtypes = [POINTER(EDFFILE), POINTER(FSAMPLE), c_int, POINTER(c_float)]
     edf_get_uncorrected_raw_cr.restype = None
 
-# <input>: 1144
+# /usr/include/edf.h: 452
 if hasattr(_libs['edfapi'], 'edf_get_uncorrected_pupil_area'):
     edf_get_uncorrected_pupil_area = _libs['edfapi'].edf_get_uncorrected_pupil_area
-    edf_get_uncorrected_pupil_area.argtypes = [POINTER(EDFFILE), POINTER(FSAMPLE),
-                                               c_int]
+    edf_get_uncorrected_pupil_area.argtypes = [POINTER(EDFFILE), POINTER(FSAMPLE), c_int]
     edf_get_uncorrected_pupil_area.restype = UINT32
 
-# <input>: 1145
+# /usr/include/edf.h: 453
 if hasattr(_libs['edfapi'], 'edf_get_uncorrected_cr_area'):
     edf_get_uncorrected_cr_area = _libs['edfapi'].edf_get_uncorrected_cr_area
-    edf_get_uncorrected_cr_area.argtypes = [POINTER(EDFFILE), POINTER(FSAMPLE),
-                                            c_int]
+    edf_get_uncorrected_cr_area.argtypes = [POINTER(EDFFILE), POINTER(FSAMPLE), c_int]
     edf_get_uncorrected_cr_area.restype = UINT32
 
-# <input>: 1146
+# /usr/include/edf.h: 454
 if hasattr(_libs['edfapi'], 'edf_get_pupil_dimension'):
     edf_get_pupil_dimension = _libs['edfapi'].edf_get_pupil_dimension
-    edf_get_pupil_dimension.argtypes = [POINTER(EDFFILE), POINTER(FSAMPLE), c_int,
-                                        POINTER(UINT32)]
+    edf_get_pupil_dimension.argtypes = [POINTER(EDFFILE), POINTER(FSAMPLE), c_int, POINTER(UINT32)]
     edf_get_pupil_dimension.restype = None
 
-# <input>: 1147
+# /usr/include/edf.h: 455
 if hasattr(_libs['edfapi'], 'edf_get_cr_dimension'):
     edf_get_cr_dimension = _libs['edfapi'].edf_get_cr_dimension
-    edf_get_cr_dimension.argtypes = [POINTER(EDFFILE), POINTER(FSAMPLE),
-                                     POINTER(UINT32)]
+    edf_get_cr_dimension.argtypes = [POINTER(EDFFILE), POINTER(FSAMPLE), POINTER(UINT32)]
     edf_get_cr_dimension.restype = None
 
-# <input>: 1148
+# /usr/include/edf.h: 456
 if hasattr(_libs['edfapi'], 'edf_get_window_position'):
     edf_get_window_position = _libs['edfapi'].edf_get_window_position
-    edf_get_window_position.argtypes = [POINTER(EDFFILE), POINTER(FSAMPLE),
-                                        POINTER(UINT32)]
+    edf_get_window_position.argtypes = [POINTER(EDFFILE), POINTER(FSAMPLE), POINTER(UINT32)]
     edf_get_window_position.restype = None
 
-# <input>: 1149
+# /usr/include/edf.h: 457
 if hasattr(_libs['edfapi'], 'edf_get_pupil_cr'):
     edf_get_pupil_cr = _libs['edfapi'].edf_get_pupil_cr
-    edf_get_pupil_cr.argtypes = [POINTER(EDFFILE), POINTER(FSAMPLE), c_int,
-                                 POINTER(c_float)]
+    edf_get_pupil_cr.argtypes = [POINTER(EDFFILE), POINTER(FSAMPLE), c_int, POINTER(c_float)]
     edf_get_pupil_cr.restype = None
 
-# <input>: 1150
+# /usr/include/edf.h: 458
 if hasattr(_libs['edfapi'], 'edf_get_uncorrected_cr2_area'):
     edf_get_uncorrected_cr2_area = _libs['edfapi'].edf_get_uncorrected_cr2_area
-    edf_get_uncorrected_cr2_area.argtypes = [POINTER(EDFFILE), POINTER(FSAMPLE),
-                                             c_int]
+    edf_get_uncorrected_cr2_area.argtypes = [POINTER(EDFFILE), POINTER(FSAMPLE), c_int]
     edf_get_uncorrected_cr2_area.restype = UINT32
 
-# <input>: 1151
+# /usr/include/edf.h: 459
 if hasattr(_libs['edfapi'], 'edf_get_uncorrected_raw_cr2'):
     edf_get_uncorrected_raw_cr2 = _libs['edfapi'].edf_get_uncorrected_raw_cr2
-    edf_get_uncorrected_raw_cr2.argtypes = [POINTER(EDFFILE), POINTER(FSAMPLE),
-                                            c_int, POINTER(c_float)]
+    edf_get_uncorrected_raw_cr2.argtypes = [POINTER(EDFFILE), POINTER(FSAMPLE), c_int, POINTER(c_float)]
     edf_get_uncorrected_raw_cr2.restype = None
 =======
     get_uncorrected_raw_pupil = _libs['edfapi'].edf_get_uncorrected_raw_pupil
@@ -1242,30 +1330,31 @@ if hasattr(_libs['edfapi'], 'edf_get_uncorrected_raw_cr2'):
     get_uncorrected_raw_cr2.restype = None
 >>>>>>> parent of 0c7acaf... BF: More PEP8 and iteritems() removal:pyeparse/edfapi/edf2py/edf2py.py
 
-# <input>: 1159
+# /usr/include/edf.h: 467
 if hasattr(_libs['edfapi'], 'edf_get_event_data'):
     edf_get_event_data = _libs['edfapi'].edf_get_event_data
     edf_get_event_data.argtypes = [POINTER(EDFFILE)]
     edf_get_event_data.restype = POINTER(FEVENT)
 
-# <input>: 1160
+# /usr/include/edf.h: 468
 if hasattr(_libs['edfapi'], 'edf_get_sample_data'):
     edf_get_sample_data = _libs['edfapi'].edf_get_sample_data
     edf_get_sample_data.argtypes = [POINTER(EDFFILE)]
     edf_get_sample_data.restype = POINTER(FSAMPLE)
 
-# <input>: 1161
+# /usr/include/edf.h: 469
 if hasattr(_libs['edfapi'], 'edf_get_recording_data'):
     edf_get_recording_data = _libs['edfapi'].edf_get_recording_data
     edf_get_recording_data.argtypes = [POINTER(EDFFILE)]
     edf_get_recording_data.restype = POINTER(RECORDINGS)
 
-# <input>: 1167
+# /usr/include/edf.h: 475
 if hasattr(_libs['edfapi'], 'edf_set_log_function'):
     edf_set_log_function = _libs['edfapi'].edf_set_log_function
     edf_set_log_function.argtypes = [CFUNCTYPE(UNCHECKED(None), String)]
     edf_set_log_function.restype = None
 
+<<<<<<< HEAD
 <<<<<<< HEAD:pyeparse/edf/_edf2py.py
 _EDFFILE = struct__EDFFILE  # <input>: 571
 =======
@@ -1306,3 +1395,1893 @@ from defines import eye_constants as eye_constants
 # End inserted files
 
 >>>>>>> parent of 0c7acaf... BF: More PEP8 and iteritems() removal:pyeparse/edfapi/edf2py/edf2py.py
+=======
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __STDC__ = 1
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __STDC_HOSTED__ = 1
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __GNUC__ = 4
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __GNUC_MINOR__ = 7
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __GNUC_PATCHLEVEL__ = 3
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __VERSION__ = '4.7.3'
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __ATOMIC_RELAXED = 0
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __ATOMIC_SEQ_CST = 5
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __ATOMIC_ACQUIRE = 2
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __ATOMIC_RELEASE = 3
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __ATOMIC_ACQ_REL = 4
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __ATOMIC_CONSUME = 1
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __FINITE_MATH_ONLY__ = 0
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    _LP64 = 1
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __LP64__ = 1
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __SIZEOF_INT__ = 4
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __SIZEOF_LONG__ = 8
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __SIZEOF_LONG_LONG__ = 8
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __SIZEOF_SHORT__ = 2
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __SIZEOF_FLOAT__ = 4
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __SIZEOF_DOUBLE__ = 8
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __SIZEOF_LONG_DOUBLE__ = 16
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __SIZEOF_SIZE_T__ = 8
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __CHAR_BIT__ = 8
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __BIGGEST_ALIGNMENT__ = 16
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __ORDER_LITTLE_ENDIAN__ = 1234
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __ORDER_BIG_ENDIAN__ = 4321
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __ORDER_PDP_ENDIAN__ = 3412
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __BYTE_ORDER__ = __ORDER_LITTLE_ENDIAN__
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __FLOAT_WORD_ORDER__ = __ORDER_LITTLE_ENDIAN__
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __SIZEOF_POINTER__ = 8
+except:
+    pass
+
+__SIZE_TYPE__ = c_ulong # /tmp/tmpcxCqxA.h: 1
+
+__PTRDIFF_TYPE__ = c_long # /tmp/tmpcxCqxA.h: 1
+
+__WCHAR_TYPE__ = c_int # /tmp/tmpcxCqxA.h: 1
+
+__WINT_TYPE__ = c_uint # /tmp/tmpcxCqxA.h: 1
+
+__INTMAX_TYPE__ = c_long # /tmp/tmpcxCqxA.h: 1
+
+__UINTMAX_TYPE__ = c_ulong # /tmp/tmpcxCqxA.h: 1
+
+__CHAR16_TYPE__ = c_uint # /tmp/tmpcxCqxA.h: 1
+
+__CHAR32_TYPE__ = c_uint # /tmp/tmpcxCqxA.h: 1
+
+__SIG_ATOMIC_TYPE__ = c_int # /tmp/tmpcxCqxA.h: 1
+
+__INT8_TYPE__ = c_char # /tmp/tmpcxCqxA.h: 1
+
+__INT16_TYPE__ = c_int # /tmp/tmpcxCqxA.h: 1
+
+__INT32_TYPE__ = c_int # /tmp/tmpcxCqxA.h: 1
+
+__INT64_TYPE__ = c_long # /tmp/tmpcxCqxA.h: 1
+
+__UINT8_TYPE__ = c_ubyte # /tmp/tmpcxCqxA.h: 1
+
+__UINT16_TYPE__ = c_uint # /tmp/tmpcxCqxA.h: 1
+
+__UINT32_TYPE__ = c_uint # /tmp/tmpcxCqxA.h: 1
+
+__UINT64_TYPE__ = c_ulong # /tmp/tmpcxCqxA.h: 1
+
+__INT_LEAST8_TYPE__ = c_char # /tmp/tmpcxCqxA.h: 1
+
+__INT_LEAST16_TYPE__ = c_int # /tmp/tmpcxCqxA.h: 1
+
+__INT_LEAST32_TYPE__ = c_int # /tmp/tmpcxCqxA.h: 1
+
+__INT_LEAST64_TYPE__ = c_long # /tmp/tmpcxCqxA.h: 1
+
+__UINT_LEAST8_TYPE__ = c_ubyte # /tmp/tmpcxCqxA.h: 1
+
+__UINT_LEAST16_TYPE__ = c_uint # /tmp/tmpcxCqxA.h: 1
+
+__UINT_LEAST32_TYPE__ = c_uint # /tmp/tmpcxCqxA.h: 1
+
+__UINT_LEAST64_TYPE__ = c_ulong # /tmp/tmpcxCqxA.h: 1
+
+__INT_FAST8_TYPE__ = c_char # /tmp/tmpcxCqxA.h: 1
+
+__INT_FAST16_TYPE__ = c_long # /tmp/tmpcxCqxA.h: 1
+
+__INT_FAST32_TYPE__ = c_long # /tmp/tmpcxCqxA.h: 1
+
+__INT_FAST64_TYPE__ = c_long # /tmp/tmpcxCqxA.h: 1
+
+__UINT_FAST8_TYPE__ = c_ubyte # /tmp/tmpcxCqxA.h: 1
+
+__UINT_FAST16_TYPE__ = c_ulong # /tmp/tmpcxCqxA.h: 1
+
+__UINT_FAST32_TYPE__ = c_ulong # /tmp/tmpcxCqxA.h: 1
+
+__UINT_FAST64_TYPE__ = c_ulong # /tmp/tmpcxCqxA.h: 1
+
+__INTPTR_TYPE__ = c_long # /tmp/tmpcxCqxA.h: 1
+
+__UINTPTR_TYPE__ = c_ulong # /tmp/tmpcxCqxA.h: 1
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __GXX_ABI_VERSION = 1002
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __SCHAR_MAX__ = 127
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __SHRT_MAX__ = 32767
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __INT_MAX__ = 2147483647
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __LONG_MAX__ = 9223372036854775807L
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __LONG_LONG_MAX__ = 9223372036854775807L
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __WCHAR_MAX__ = 2147483647
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __WCHAR_MIN__ = ((-__WCHAR_MAX__) - 1)
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __WINT_MAX__ = 4294967295
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __WINT_MIN__ = 0
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __PTRDIFF_MAX__ = 9223372036854775807L
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __SIZE_MAX__ = 18446744073709551615L
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __INTMAX_MAX__ = 9223372036854775807L
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __UINTMAX_MAX__ = 18446744073709551615L
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __SIG_ATOMIC_MAX__ = 2147483647
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __SIG_ATOMIC_MIN__ = ((-__SIG_ATOMIC_MAX__) - 1)
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __INT8_MAX__ = 127
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __INT16_MAX__ = 32767
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __INT32_MAX__ = 2147483647
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __INT64_MAX__ = 9223372036854775807L
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __UINT8_MAX__ = 255
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __UINT16_MAX__ = 65535
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __UINT32_MAX__ = 4294967295
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __UINT64_MAX__ = 18446744073709551615L
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __INT_LEAST8_MAX__ = 127
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+def __INT8_C(c):
+    return c
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __INT_LEAST16_MAX__ = 32767
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+def __INT16_C(c):
+    return c
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __INT_LEAST32_MAX__ = 2147483647
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+def __INT32_C(c):
+    return c
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __INT_LEAST64_MAX__ = 9223372036854775807L
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __UINT_LEAST8_MAX__ = 255
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+def __UINT8_C(c):
+    return c
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __UINT_LEAST16_MAX__ = 65535
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+def __UINT16_C(c):
+    return c
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __UINT_LEAST32_MAX__ = 4294967295
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __UINT_LEAST64_MAX__ = 18446744073709551615L
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __INT_FAST8_MAX__ = 127
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __INT_FAST16_MAX__ = 9223372036854775807L
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __INT_FAST32_MAX__ = 9223372036854775807L
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __INT_FAST64_MAX__ = 9223372036854775807L
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __UINT_FAST8_MAX__ = 255
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __UINT_FAST16_MAX__ = 18446744073709551615L
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __UINT_FAST32_MAX__ = 18446744073709551615L
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __UINT_FAST64_MAX__ = 18446744073709551615L
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __INTPTR_MAX__ = 9223372036854775807L
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __UINTPTR_MAX__ = 18446744073709551615L
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __FLT_EVAL_METHOD__ = 0
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __DEC_EVAL_METHOD__ = 2
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __FLT_RADIX__ = 2
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __FLT_MANT_DIG__ = 24
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __FLT_DIG__ = 6
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __FLT_MIN_EXP__ = (-125)
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __FLT_MIN_10_EXP__ = (-37)
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __FLT_MAX_EXP__ = 128
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __FLT_MAX_10_EXP__ = 38
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __FLT_DECIMAL_DIG__ = 9
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __FLT_MAX__ = 3.4028234663852886e+38
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __FLT_MIN__ = 1.1754943508222875e-38
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __FLT_EPSILON__ = 1.1920928955078125e-07
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __FLT_DENORM_MIN__ = 1.401298464324817e-45
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __FLT_HAS_DENORM__ = 1
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __FLT_HAS_INFINITY__ = 1
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __FLT_HAS_QUIET_NAN__ = 1
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __DBL_MANT_DIG__ = 53
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __DBL_DIG__ = 15
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __DBL_MIN_EXP__ = (-1021)
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __DBL_MIN_10_EXP__ = (-307)
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __DBL_MAX_EXP__ = 1024
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __DBL_MAX_10_EXP__ = 308
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __DBL_DECIMAL_DIG__ = 17
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __DBL_MAX__ = 1.7976931348623157e+308
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __DBL_MIN__ = 2.2250738585072014e-308
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __DBL_EPSILON__ = 2.220446049250313e-16
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __DBL_DENORM_MIN__ = 5e-324
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __DBL_HAS_DENORM__ = 1
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __DBL_HAS_INFINITY__ = 1
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __DBL_HAS_QUIET_NAN__ = 1
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __LDBL_MANT_DIG__ = 64
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __LDBL_DIG__ = 18
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __LDBL_MIN_EXP__ = (-16381)
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __LDBL_MIN_10_EXP__ = (-4931)
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __LDBL_MAX_EXP__ = 16384
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __LDBL_MAX_10_EXP__ = 4932
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __DECIMAL_DIG__ = 21
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __LDBL_MAX__ = float('inf')
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __LDBL_MIN__ = 0.0
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __LDBL_EPSILON__ = 1.0842021724855044e-19
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __LDBL_DENORM_MIN__ = 0.0
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __LDBL_HAS_DENORM__ = 1
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __LDBL_HAS_INFINITY__ = 1
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __LDBL_HAS_QUIET_NAN__ = 1
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __DEC32_MANT_DIG__ = 7
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __DEC32_MIN_EXP__ = (-94)
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __DEC32_MAX_EXP__ = 97
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __DEC64_MANT_DIG__ = 16
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __DEC64_MIN_EXP__ = (-382)
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __DEC64_MAX_EXP__ = 385
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __DEC128_MANT_DIG__ = 34
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __DEC128_MIN_EXP__ = (-6142)
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __DEC128_MAX_EXP__ = 6145
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __GNUC_GNU_INLINE__ = 1
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __NO_INLINE__ = 1
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __GCC_HAVE_SYNC_COMPARE_AND_SWAP_1 = 1
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __GCC_HAVE_SYNC_COMPARE_AND_SWAP_2 = 1
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __GCC_HAVE_SYNC_COMPARE_AND_SWAP_4 = 1
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __GCC_HAVE_SYNC_COMPARE_AND_SWAP_8 = 1
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __GCC_ATOMIC_BOOL_LOCK_FREE = 2
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __GCC_ATOMIC_CHAR_LOCK_FREE = 2
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __GCC_ATOMIC_CHAR16_T_LOCK_FREE = 2
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __GCC_ATOMIC_CHAR32_T_LOCK_FREE = 2
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __GCC_ATOMIC_WCHAR_T_LOCK_FREE = 2
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __GCC_ATOMIC_SHORT_LOCK_FREE = 2
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __GCC_ATOMIC_INT_LOCK_FREE = 2
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __GCC_ATOMIC_LONG_LOCK_FREE = 2
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __GCC_ATOMIC_LLONG_LOCK_FREE = 2
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __GCC_ATOMIC_TEST_AND_SET_TRUEVAL = 1
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __GCC_ATOMIC_POINTER_LOCK_FREE = 2
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __GCC_HAVE_DWARF2_CFI_ASM = 1
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __PRAGMA_REDEFINE_EXTNAME = 1
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __SSP__ = 1
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __SIZEOF_INT128__ = 16
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __SIZEOF_WCHAR_T__ = 4
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __SIZEOF_WINT_T__ = 4
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __SIZEOF_PTRDIFF_T__ = 8
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __amd64 = 1
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __amd64__ = 1
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __x86_64 = 1
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __x86_64__ = 1
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __k8 = 1
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __k8__ = 1
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __code_model_small__ = 1
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __MMX__ = 1
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __SSE__ = 1
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __SSE2__ = 1
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __SSE_MATH__ = 1
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __SSE2_MATH__ = 1
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __gnu_linux__ = 1
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __linux = 1
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __linux__ = 1
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    linux = 1
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __unix = 1
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __unix__ = 1
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    unix = 1
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __ELF__ = 1
+except:
+    pass
+
+# /tmp/tmpcxCqxA.h: 1
+try:
+    __DECIMAL_BID_FORMAT__ = 1
+except:
+    pass
+
+__const = c_int # <command-line>: 4
+
+# <command-line>: 7
+try:
+    CTYPESGEN = 1
+except:
+    pass
+
+# /usr/include/edftypes.h: 17
+try:
+    BYTEDEF = 1
+except:
+    pass
+
+# /usr/include/edftypes.h: 36
+try:
+    MICRODEF = 1
+except:
+    pass
+
+# /usr/include/edf_data.h: 75
+try:
+    MISSING_DATA = (-32768)
+except:
+    pass
+
+# /usr/include/edf_data.h: 76
+try:
+    MISSING = (-32768)
+except:
+    pass
+
+# /usr/include/edf_data.h: 77
+try:
+    INaN = (-32768)
+except:
+    pass
+
+# /usr/include/edf_data.h: 84
+try:
+    LEFT_EYE = 0
+except:
+    pass
+
+# /usr/include/edf_data.h: 85
+try:
+    RIGHT_EYE = 1
+except:
+    pass
+
+# /usr/include/edf_data.h: 86
+try:
+    LEFTEYEI = 0
+except:
+    pass
+
+# /usr/include/edf_data.h: 87
+try:
+    RIGHTEYEI = 1
+except:
+    pass
+
+# /usr/include/edf_data.h: 88
+try:
+    LEFT = 0
+except:
+    pass
+
+# /usr/include/edf_data.h: 89
+try:
+    RIGHT = 1
+except:
+    pass
+
+# /usr/include/edf_data.h: 91
+try:
+    BINOCULAR = 2
+except:
+    pass
+
+# /usr/include/edf_data.h: 107
+try:
+    SAMPLE_LEFT = 32768
+except:
+    pass
+
+# /usr/include/edf_data.h: 108
+try:
+    SAMPLE_RIGHT = 16384
+except:
+    pass
+
+# /usr/include/edf_data.h: 110
+try:
+    SAMPLE_TIMESTAMP = 8192
+except:
+    pass
+
+# /usr/include/edf_data.h: 112
+try:
+    SAMPLE_PUPILXY = 4096
+except:
+    pass
+
+# /usr/include/edf_data.h: 113
+try:
+    SAMPLE_HREFXY = 2048
+except:
+    pass
+
+# /usr/include/edf_data.h: 114
+try:
+    SAMPLE_GAZEXY = 1024
+except:
+    pass
+
+# /usr/include/edf_data.h: 115
+try:
+    SAMPLE_GAZERES = 512
+except:
+    pass
+
+# /usr/include/edf_data.h: 116
+try:
+    SAMPLE_PUPILSIZE = 256
+except:
+    pass
+
+# /usr/include/edf_data.h: 117
+try:
+    SAMPLE_STATUS = 128
+except:
+    pass
+
+# /usr/include/edf_data.h: 118
+try:
+    SAMPLE_INPUTS = 64
+except:
+    pass
+
+# /usr/include/edf_data.h: 119
+try:
+    SAMPLE_BUTTONS = 32
+except:
+    pass
+
+# /usr/include/edf_data.h: 121
+try:
+    SAMPLE_HEADPOS = 16
+except:
+    pass
+
+# /usr/include/edf_data.h: 122
+try:
+    SAMPLE_TAGGED = 8
+except:
+    pass
+
+# /usr/include/edf_data.h: 123
+try:
+    SAMPLE_UTAGGED = 4
+except:
+    pass
+
+# /usr/include/edf_data.h: 124
+try:
+    SAMPLE_ADD_OFFSET = 2
+except:
+    pass
+
+# /usr/include/edf_data.h: 128
+try:
+    LSTRINGDEF = 1
+except:
+    pass
+
+# /usr/include/edf_data.h: 140
+try:
+    FSAMPLEDEF = 1
+except:
+    pass
+
+# /usr/include/edf_data.h: 192
+try:
+    FEVENTDEF = 1
+except:
+    pass
+
+# /usr/include/edf_data.h: 308
+try:
+    SAMPLE_TYPE = 200
+except:
+    pass
+
+# /usr/include/edf_data.h: 317
+try:
+    STARTPARSE = 1
+except:
+    pass
+
+# /usr/include/edf_data.h: 318
+try:
+    ENDPARSE = 2
+except:
+    pass
+
+# /usr/include/edf_data.h: 319
+try:
+    BREAKPARSE = 10
+except:
+    pass
+
+# /usr/include/edf_data.h: 322
+try:
+    STARTBLINK = 3
+except:
+    pass
+
+# /usr/include/edf_data.h: 323
+try:
+    ENDBLINK = 4
+except:
+    pass
+
+# /usr/include/edf_data.h: 324
+try:
+    STARTSACC = 5
+except:
+    pass
+
+# /usr/include/edf_data.h: 325
+try:
+    ENDSACC = 6
+except:
+    pass
+
+# /usr/include/edf_data.h: 326
+try:
+    STARTFIX = 7
+except:
+    pass
+
+# /usr/include/edf_data.h: 327
+try:
+    ENDFIX = 8
+except:
+    pass
+
+# /usr/include/edf_data.h: 328
+try:
+    FIXUPDATE = 9
+except:
+    pass
+
+# /usr/include/edf_data.h: 334
+try:
+    STARTSAMPLES = 15
+except:
+    pass
+
+# /usr/include/edf_data.h: 335
+try:
+    ENDSAMPLES = 16
+except:
+    pass
+
+# /usr/include/edf_data.h: 336
+try:
+    STARTEVENTS = 17
+except:
+    pass
+
+# /usr/include/edf_data.h: 337
+try:
+    ENDEVENTS = 18
+except:
+    pass
+
+# /usr/include/edf_data.h: 343
+try:
+    MESSAGEEVENT = 24
+except:
+    pass
+
+# /usr/include/edf_data.h: 348
+try:
+    BUTTONEVENT = 25
+except:
+    pass
+
+# /usr/include/edf_data.h: 349
+try:
+    INPUTEVENT = 28
+except:
+    pass
+
+# /usr/include/edf_data.h: 351
+try:
+    LOST_DATA_EVENT = 63
+except:
+    pass
+
+# /usr/include/edf_data.h: 358
+try:
+    READ_ENDTIME = 64
+except:
+    pass
+
+# /usr/include/edf_data.h: 361
+try:
+    READ_GRES = 512
+except:
+    pass
+
+# /usr/include/edf_data.h: 362
+try:
+    READ_SIZE = 128
+except:
+    pass
+
+# /usr/include/edf_data.h: 363
+try:
+    READ_VEL = 256
+except:
+    pass
+
+# /usr/include/edf_data.h: 364
+try:
+    READ_STATUS = 8192
+except:
+    pass
+
+# /usr/include/edf_data.h: 366
+try:
+    READ_BEG = 1
+except:
+    pass
+
+# /usr/include/edf_data.h: 367
+try:
+    READ_END = 2
+except:
+    pass
+
+# /usr/include/edf_data.h: 368
+try:
+    READ_AVG = 4
+except:
+    pass
+
+# /usr/include/edf_data.h: 371
+try:
+    READ_PUPILXY = 1024
+except:
+    pass
+
+# /usr/include/edf_data.h: 372
+try:
+    READ_HREFXY = 2048
+except:
+    pass
+
+# /usr/include/edf_data.h: 373
+try:
+    READ_GAZEXY = 4096
+except:
+    pass
+
+# /usr/include/edf_data.h: 375
+try:
+    READ_BEGPOS = 8
+except:
+    pass
+
+# /usr/include/edf_data.h: 376
+try:
+    READ_ENDPOS = 16
+except:
+    pass
+
+# /usr/include/edf_data.h: 377
+try:
+    READ_AVGPOS = 32
+except:
+    pass
+
+# /usr/include/edf_data.h: 381
+try:
+    FRIGHTEYE_EVENTS = 32768
+except:
+    pass
+
+# /usr/include/edf_data.h: 382
+try:
+    FLEFTEYE_EVENTS = 16384
+except:
+    pass
+
+# /usr/include/edf_data.h: 387
+try:
+    LEFTEYE_EVENTS = 32768
+except:
+    pass
+
+# /usr/include/edf_data.h: 388
+try:
+    RIGHTEYE_EVENTS = 16384
+except:
+    pass
+
+# /usr/include/edf_data.h: 389
+try:
+    BLINK_EVENTS = 8192
+except:
+    pass
+
+# /usr/include/edf_data.h: 390
+try:
+    FIXATION_EVENTS = 4096
+except:
+    pass
+
+# /usr/include/edf_data.h: 391
+try:
+    FIXUPDATE_EVENTS = 2048
+except:
+    pass
+
+# /usr/include/edf_data.h: 392
+try:
+    SACCADE_EVENTS = 1024
+except:
+    pass
+
+# /usr/include/edf_data.h: 393
+try:
+    MESSAGE_EVENTS = 512
+except:
+    pass
+
+# /usr/include/edf_data.h: 394
+try:
+    BUTTON_EVENTS = 64
+except:
+    pass
+
+# /usr/include/edf_data.h: 395
+try:
+    INPUT_EVENTS = 32
+except:
+    pass
+
+# /usr/include/edf_data.h: 401
+try:
+    EVENT_VELOCITY = 32768
+except:
+    pass
+
+# /usr/include/edf_data.h: 402
+try:
+    EVENT_PUPILSIZE = 16384
+except:
+    pass
+
+# /usr/include/edf_data.h: 403
+try:
+    EVENT_GAZERES = 8192
+except:
+    pass
+
+# /usr/include/edf_data.h: 404
+try:
+    EVENT_STATUS = 4096
+except:
+    pass
+
+# /usr/include/edf_data.h: 406
+try:
+    EVENT_GAZEXY = 1024
+except:
+    pass
+
+# /usr/include/edf_data.h: 407
+try:
+    EVENT_HREFXY = 512
+except:
+    pass
+
+# /usr/include/edf_data.h: 408
+try:
+    EVENT_PUPILXY = 256
+except:
+    pass
+
+# /usr/include/edf_data.h: 410
+try:
+    FIX_AVG_ONLY = 8
+except:
+    pass
+
+# /usr/include/edf_data.h: 411
+try:
+    START_TIME_ONLY = 4
+except:
+    pass
+
+# /usr/include/edf_data.h: 413
+try:
+    PARSEDBY_GAZE = 192
+except:
+    pass
+
+# /usr/include/edf_data.h: 414
+try:
+    PARSEDBY_HREF = 128
+except:
+    pass
+
+# /usr/include/edf_data.h: 415
+try:
+    PARSEDBY_PUPIL = 64
+except:
+    pass
+
+# /usr/include/edf_data.h: 420
+try:
+    LED_TOP_WARNING = 128
+except:
+    pass
+
+# /usr/include/edf_data.h: 421
+try:
+    LED_BOT_WARNING = 64
+except:
+    pass
+
+# /usr/include/edf_data.h: 422
+try:
+    LED_LEFT_WARNING = 32
+except:
+    pass
+
+# /usr/include/edf_data.h: 423
+try:
+    LED_RIGHT_WARNING = 16
+except:
+    pass
+
+# /usr/include/edf_data.h: 424
+try:
+    HEAD_POSITION_WARNING = 240
+except:
+    pass
+
+# /usr/include/edf_data.h: 426
+try:
+    LED_EXTRA_WARNING = 8
+except:
+    pass
+
+# /usr/include/edf_data.h: 427
+try:
+    LED_MISSING_WARNING = 4
+except:
+    pass
+
+# /usr/include/edf_data.h: 428
+try:
+    HEAD_VELOCITY_WARNING = 1
+except:
+    pass
+
+# /usr/include/edf_data.h: 430
+try:
+    CALIBRATION_AREA_WARNING = 2
+except:
+    pass
+
+# /usr/include/edf_data.h: 432
+try:
+    MATH_ERROR_WARNING = 8192
+except:
+    pass
+
+# /usr/include/edf_data.h: 438
+try:
+    INTERP_SAMPLE_WARNING = 4096
+except:
+    pass
+
+# /usr/include/edf_data.h: 444
+try:
+    INTERP_PUPIL_WARNING = 32768
+except:
+    pass
+
+# /usr/include/edf_data.h: 447
+try:
+    CR_WARNING = 3840
+except:
+    pass
+
+# /usr/include/edf_data.h: 448
+try:
+    CR_LEFT_WARNING = 1280
+except:
+    pass
+
+# /usr/include/edf_data.h: 449
+try:
+    CR_RIGHT_WARNING = 2560
+except:
+    pass
+
+# /usr/include/edf_data.h: 452
+try:
+    CR_LOST_WARNING = 768
+except:
+    pass
+
+# /usr/include/edf_data.h: 453
+try:
+    CR_LOST_LEFT_WARNING = 256
+except:
+    pass
+
+# /usr/include/edf_data.h: 454
+try:
+    CR_LOST_RIGHT_WARNING = 512
+except:
+    pass
+
+# /usr/include/edf_data.h: 457
+try:
+    CR_RECOV_WARNING = 3072
+except:
+    pass
+
+# /usr/include/edf_data.h: 458
+try:
+    CR_RECOV_LEFT_WARNING = 1024
+except:
+    pass
+
+# /usr/include/edf_data.h: 459
+try:
+    CR_RECOV_RIGHT_WARNING = 2048
+except:
+    pass
+
+# /usr/include/edf_data.h: 465
+try:
+    TFLAG_MISSING = 16384
+except:
+    pass
+
+# /usr/include/edf_data.h: 466
+try:
+    TFLAG_ANGLE = 8192
+except:
+    pass
+
+# /usr/include/edf_data.h: 467
+try:
+    TFLAG_NEAREYE = 4096
+except:
+    pass
+
+# /usr/include/edf_data.h: 469
+try:
+    TFLAG_CLOSE = 2048
+except:
+    pass
+
+# /usr/include/edf_data.h: 470
+try:
+    TFLAG_FAR = 1024
+except:
+    pass
+
+# /usr/include/edf_data.h: 472
+try:
+    TFLAG_T_TSIDE = 128
+except:
+    pass
+
+# /usr/include/edf_data.h: 473
+try:
+    TFLAG_T_BSIDE = 64
+except:
+    pass
+
+# /usr/include/edf_data.h: 474
+try:
+    TFLAG_T_LSIDE = 32
+except:
+    pass
+
+# /usr/include/edf_data.h: 475
+try:
+    TFLAG_T_RSIDE = 16
+except:
+    pass
+
+# /usr/include/edf_data.h: 477
+try:
+    TFLAG_E_TSIDE = 8
+except:
+    pass
+
+# /usr/include/edf_data.h: 478
+try:
+    TFLAG_E_BSIDE = 4
+except:
+    pass
+
+# /usr/include/edf_data.h: 479
+try:
+    TFLAG_E_LSIDE = 2
+except:
+    pass
+
+# /usr/include/edf_data.h: 480
+try:
+    TFLAG_E_RSIDE = 1
+except:
+    pass
+
+# /usr/include/edf.h: 57
+try:
+    NO_PENDING_ITEMS = 0
+except:
+    pass
+
+# /usr/include/edf.h: 58
+try:
+    RECORDING_INFO = 30
+except:
+    pass
+
+# /usr/include/edf.h: 83
+try:
+    PUPIL_ONLY_250 = 0
+except:
+    pass
+
+# /usr/include/edf.h: 84
+try:
+    PUPIL_ONLY_500 = 1
+except:
+    pass
+
+# /usr/include/edf.h: 85
+try:
+    PUPIL_CR = 2
+except:
+    pass
+
+# /usr/include/edf.h: 101
+def FLOAT_TIME(x):
+    return (((x.contents.time).value) + (((x.contents.flags).value) & SAMPLE_ADD_OFFSET) and 0.5 or 0.0)
+
+_EDFFILE = struct__EDFFILE # /usr/include/edf.h: 94
+
+# No inserted files
+
+>>>>>>> parent of 388c050... FIX: Revert ctypes
